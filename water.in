@@ -15,7 +15,7 @@ variable density equal mass(all)/vol*v_den_ratio
 velocity all create 300 8198561
 fix removeMomentum all momentum 1000 linear 1 1 1
 fix constrain all shake 1.0e-4 20 100000 b 1
-variable old_p variable equal 1.0
+variable old_p equal 1.0
 
 variable a loop 19
 label run_loop
