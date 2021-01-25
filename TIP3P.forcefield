@@ -16,7 +16,8 @@ special_bonds lj/coul 0.0 0.0 0.5
 
 pair_coeff 1 1 0.000 0.000	
 pair_coeff 1 2 0.000 0.000	
-pair_coeff 2 2 0.102 3.188
+#pair_coeff 2 2 0.102 3.188
+pair_coeff 2 2 0.1521 3.1505742268315
 
 bond_style harmonic
 bond_coeff 1 450.0 0.9572

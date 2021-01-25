@@ -1,27 +1,36 @@
 units real
 boundary p p p
 atom_style full
-read_data /home/liufeng_pkuhpc/lustre3/zgh/GO_MD/md_scripts/lmp/singleTIP3P.data
-include /home/liufeng_pkuhpc/lustre3/zgh/GO_MD/md_scripts/lmp/TIP3P.forcefield
-replicate 30 30 30
+read_data /home/liufeng_pkuhpc/lustre3/zgh/lmp_water/singleTIP3P.data
+include /home/liufeng_pkuhpc/lustre3/zgh/lmp_water/TIP3P.forcefield
+replicate 60 60 60
 
-velocity all create 300 1234
+variable dp equal 100e6
+variable p_ratio equal 1.01325*1e5
+variable den_ratio equal 10/6.022
+variable density equal mass(all)/vol*v_den_ratio
+
+velocity all create 300 8198561
 fix removeMomentum all momentum 1000 linear 1 1 1
-fix constrain all shake 1.0e-4 20 10000 b 1
-fix npt all npt temp 300 300 100.0 iso 1.0 1.0 1000.0
-thermo 10000
-run 100000
+fix constrain all shake 1.0e-4 20 100000 b 1
+variable old_p variable equal 1.0
+
+variable a loop 19
+label run_loop
+
+variable new_p equal ${a}*v_dp/v_p_ratio
+fix npt all npt temp 300 300 100.0 iso $(v_old_p) $(v_new_p) 1000.0
+dump check all atom 10000 water.dump
+thermo 100000
+run 1000000
+unfix npt
+variable old_p equal v_new_p
+
+fix result all ave/time 100 10 1000000 v_new_p press_real v_density file result.data off 1
+fix npt all npt temp 300 300 100.0 iso $(v_new_p) $(v_new_p) 1000.0
+run 1000000
+unfix result
 unfix npt
 
-write_dump all custom tmp.dump id xu yu zu 
-change_box all boundary p p sf z delta 0 10
-variable laststep file tmp.dump
-next laststep
-read_dump tmp.dump ${laststep} x y z replace yes box no
-
-region zlo_plane plane 0 0 $(zlo-2) 0 0 1
-fix wall_zlo all wall/region zlo_plane lj126 0.102 3.188 10
-fix nvt all nvt temp 300 300 100.0
-thermo_modify lost warn lost/bond warn
-dump check all atom 10000 water.dump
-run 5000000
+next a
+jump SELF run_loop
