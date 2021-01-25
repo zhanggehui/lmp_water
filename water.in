@@ -33,7 +33,7 @@ else &
 unfix npt
 variable old_p equal v_new_p
 
-fix result all ave/time 100 10 1000000 v_new_p press v_density file result.data off 1
+fix result all ave/time 100 10 1000000 v_new_p c_thermo_press v_density file result.data off 1
 fix npt all npt temp 300 300 100.0 iso $(v_new_p) $(v_new_p) 1000.0
 
 if "${debug} > 0" then &
