@@ -1,3 +1,5 @@
+variable debug equal 1
+
 units real
 boundary p p p
 atom_style full
@@ -22,13 +24,23 @@ variable new_p equal ${a}*v_dp/v_p_ratio
 fix npt all npt temp 300 300 100.0 iso $(v_old_p) $(v_new_p) 1000.0
 dump check all atom 10000 water.dump
 thermo 100000
-run 1000000
+
+if "${debug} > 0" then &
+"run 0" &
+else &
+"run 1000000"
+
 unfix npt
 variable old_p equal v_new_p
 
 fix result all ave/time 100 10 1000000 v_new_p press_real v_density file result.data off 1
 fix npt all npt temp 300 300 100.0 iso $(v_new_p) $(v_new_p) 1000.0
-run 1000000
+
+if "${debug} > 0" then &
+"run 0" &
+else &
+"run 1000000"
+
 unfix result
 unfix npt
 
