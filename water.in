@@ -22,7 +22,6 @@ label run_loop
 
 variable new_p equal ${a}*v_dp/v_p_ratio
 fix npt all npt temp 300 300 100.0 iso $(v_old_p) $(v_new_p) 1000.0
-dump check all atom 10000 water.dump
 thermo 100000
 
 if "${debug} > 0" then &
