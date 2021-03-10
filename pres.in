@@ -1,21 +1,9 @@
-variable debug equal 0
-
-units real
-boundary p p p
-atom_style full
-read_data /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/singleTIP3P.data
-include /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/TIP3P.forcefield
-replicate 50 50 50
+include /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/build.in
 
 variable dp equal 100e6
 variable p_ratio equal 1.01325*1e5
 variable den_ratio equal 10/6.022
 variable density equal mass(all)/vol*v_den_ratio
-
-velocity all create 300 8198561
-fix removeMomentum all momentum 1000 linear 1 1 1
-fix constrain all shake 1.0e-4 20 100000 b 1
-variable old_p equal 1.0
 
 variable a loop 19
 label run_loop
