@@ -3,8 +3,8 @@ variable debug equal 0
 units real
 boundary p p p
 atom_style full
-read_data /home/liufeng_pkuhpc/lustre3/zgh/lmp_water/singleTIP3P.data
-include /home/liufeng_pkuhpc/lustre3/zgh/lmp_water/TIP3P.forcefield
+read_data /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/singleTIP3P.data
+include /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/TIP3P.forcefield
 replicate 50 50 50
 
 variable dp equal 100e6

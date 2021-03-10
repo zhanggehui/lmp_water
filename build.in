@@ -1,0 +1,12 @@
+variable debug equal 1
+
+units real
+boundary p p p
+atom_style full
+read_data /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/singleTIP3P.data
+include /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/TIP3P.forcefield
+replicate 50 50 50
+
+velocity all create 300 8198561
+fix removeMomentum all momentum 1000 linear 1 1 1
+fix constrain all shake 1.0e-4 20 100000 b 1
