@@ -1,4 +1,4 @@
-include /home/liufeng_pkuhpc/lustre3/zgh/lmp_water/build.in
+include /home/liufeng_pkuhpc/lustre3/zgh/lmp/lmp_water/build.in
 
 variable t0 equal 300
 variable dt equal 10
